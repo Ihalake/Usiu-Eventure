@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USIU Events - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#fbf8fb]">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div id="adminInitials" class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                        SA
+                    </div>
+                    <div>
+                        <p class="text-[#1b0e19] font-medium">System Admin</p>
+                        <p class="text-[#964f8c] text-sm">Administrator</p>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <a href="#" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Events</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Students</span>
+                </a>
+                <a href="#" id="logoutBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Notification area -->
+            <div id="notification" class="hidden">
+                <div class="mb-4 rounded-xl p-4"></div>
+            </div>
+
+            <h1 class="text-2xl font-bold text-[#1b0e19] mb-8">Student Management</h1>
+
+            <!-- Add Student Form -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h2 class="text-lg font-bold text-[#1b0e19] mb-4">Add New Student</h2>
+                <form id="addStudentForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Full Name</label>
+                            <input type="text" name="name" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">School ID</label>
+                            <input type="text" name="schoolId" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Password</label>
+                            <input type="password" name="password" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="bg-[#92137f] text-white px-6 py-2 rounded-xl hover:bg-[#7b0f6b] transition-colors">
+                        Add Student
+                    </button>
+                </form>
+            </div>
+
+            <!-- Students List -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-lg font-bold text-[#1b0e19] mb-4">Registered Students</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-[#e6d0e3]">
+                                <th class="text-left p-3 text-[#1b0e19]">Full Name</th>
+                                <th class="text-left p-3 text-[#1b0e19]">School ID</th>
+                                <th class="text-left p-3 text-[#1b0e19]">Created At</th>
+                                <th class="text-left p-3 text-[#1b0e19]">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/';
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'error') {
+            const notification = document.getElementById('notification');
+            const notificationContent = notification.querySelector('div');
+            
+            notificationContent.className = 'mb-4 rounded-xl p-4 ' + 
+                (type === 'success' 
+                    ? 'bg-[#f3f9f3] border border-[#92137f] text-[#1b0e19]'
+                    : 'bg-[#fdf2f1] border border-[#e6d0e3] text-[#1b0e19]');
+            
+            notificationContent.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Fetch and display students
+        async function fetchStudents() {
+            try {
+                const response = await fetch('/api/auth/students', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('studentsTableBody');
+                tableBody.innerHTML = data.students.map(student => `
+                    <tr class="border-b border-[#e6d0e3]">
+                        <td class="p-3">${student.name}</td>
+                        <td class="p-3">${student.schoolId}</td>
+                        <td class="p-3">${new Date(student.createdAt).toLocaleDateString()}</td>
+                        <td class="p-3">
+                            <button onclick="deleteStudent('${student._id}')"
+                                class="text-red-500 hover:text-red-700">Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                showNotification('Error fetching students');
+            }
+        }
+
+        // Add student form handler
+        document.getElementById('addStudentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/api/auth/create-student', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        name: formData.get('name'),
+                        schoolId: formData.get('schoolId'),
+                        password: formData.get('password')
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showNotification('Student added successfully', 'success');
+                    e.target.reset();
+                    fetchStudents();
+                } else {
+                    showNotification(data.message);
+                }
+            } catch (error) {
+                showNotification('Error adding student');
+            }
+        });
+
+        // Delete student function
+        async function deleteStudent(id) {
+            if (!confirm('Are you sure you want to delete this student?')) return;
+            
+            try {
+                const response = await fetch(`/api/auth/students/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('Student deleted successfully', 'success');
+                    fetchStudents();
+                } else {
+                    const data = await response.json();
+                    showNotification(data.message);
+                }
+            } catch (error) {
+                showNotification('Error deleting student');
+            }
+        }
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/';
+        });
+
+        // Initialize
+        fetchStudents();
+    </script>
+</body>
+</html>

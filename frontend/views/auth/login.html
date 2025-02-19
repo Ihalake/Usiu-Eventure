@@ -1,0 +1,126 @@
+<!-- frontend/views/auth/login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USIU Events - Login</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex min-h-screen flex-col bg-[#fbf8fb]">
+        <div class="flex h-full grow flex-col">
+            <header class="flex items-center justify-between border-b border-[#f3e8f1] px-10 py-3">
+                <div class="flex items-center gap-4 text-[#1b0e19]">
+                    <h2 class="text-lg font-bold tracking-[-0.015em]">USIU Events</h2>
+                </div>
+            </header>
+            <div class="px-40 flex flex-1 justify-center py-5">
+                <div class="flex flex-col w-[512px] py-5">
+                    <h1 class="text-[22px] font-bold tracking-[-0.015em] px-4 text-center pb-3 pt-5">Log in</h1>
+                    <form id="loginForm" class="space-y-4">
+                        <div class="px-4">
+                            <label class="flex flex-col">
+                                <p class="text-[#1b0e19] text-base font-medium pb-2">School ID</p>
+                                <input
+                                    type="text"
+                                    name="schoolId"
+                                    placeholder="Enter your school ID"
+                                    class="form-input rounded-xl border-[#e6d0e3] bg-[#fbf8fb] h-14 placeholder-[#964f8c]"
+                                    required
+                                />
+                            </label>
+                        </div>
+                        <div class="px-4">
+                            <label class="flex flex-col">
+                                <p class="text-[#1b0e19] text-base font-medium pb-2">Password</p>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    class="form-input rounded-xl border-[#e6d0e3] bg-[#fbf8fb] h-14 placeholder-[#964f8c]"
+                                    required
+                                />
+                            </label>
+                        </div>
+                        <div class="px-4">
+                            <button
+                                type="submit"
+                                class="w-full h-10 rounded-xl bg-[#92137f] text-[#fbf8fb] font-bold"
+                            >
+                                Log in
+                            </button>
+                        </div>
+                    </form>
+                    <div id="notification" class="fixed top-4 right-4 max-w-md hidden">
+                        <div class="rounded-xl bg-[#fdf2f1] border border-[#e6d0e3] p-4 shadow-lg">
+                          <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                              <!-- Error icon -->
+                              <svg class="h-5 w-5 text-[#92137f]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                              </svg>
+                            </div>
+                            <div class="ml-3">
+                              <p id="notificationText" class="text-sm font-medium text-[#1b0e19]"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showNotification(message) {
+          const notification = document.getElementById('notification');
+          const notificationText = document.getElementById('notificationText');
+          notificationText.textContent = message;
+          notification.classList.remove('hidden');
+          
+          // Hide after 3 seconds
+          setTimeout(() => {
+            notification.classList.add('hidden');
+          }, 3000);
+        }
+      
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          
+          try {
+            const response = await fetch('/api/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                schoolId: formData.get('schoolId'),
+                password: formData.get('password')
+              })
+            });
+      
+            const data = await response.json();
+            
+            if (response.ok) {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('user', JSON.stringify(data.user));
+              window.location.href = '/admin/dashboard';
+            } else {
+              showNotification(data.message);
+            }
+          } catch (error) {
+            showNotification('An error occurred. Please try again.');
+          }
+        });
+      </script>
+</body>
+</html>
