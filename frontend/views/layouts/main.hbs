@@ -1,0 +1,70 @@
+{{!-- frontend/views/layouts/main.hbs --}}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>{{pageTitle}} - USIU Events</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#92137f',
+                        secondary: '#fbf8fb',
+                        textPrimary: '#1b0e19',
+                        accent: '#964f8c',
+                        border: '#e6d0e3'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Add this to verify Tailwind is loading -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .btn-primary {
+                @apply bg-[#92137f] text-[#fbf8fb];
+            }
+            .input-primary {
+                @apply border-[#e6d0e3] bg-[#fbf8fb];
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col bg-[#fbf8fb] group/design-root overflow-x-hidden" 
+         style='font-family: Inter, "Noto Sans", sans-serif;'>
+        
+        {{#if showHeader}}
+            {{> header}}
+        {{/if}}
+
+        {{{body}}}
+
+        {{#if showFooter}}
+            {{> footer}}
+        {{/if}}
+    </div>
+
+    <script src="/js/main.js"></script>
+
+    {{#if user.role}}
+    {{#if (eq user.role 'admin')}}
+        <script src="/js/admin.js"></script>
+    {{/if}}
+{{/if}}
+
+</body>
+</html>

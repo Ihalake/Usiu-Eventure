@@ -1,0 +1,148 @@
+<div class="flex flex-1">
+    <!-- Sidebar -->
+    <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+        <div class="mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                    SA
+                </div>
+                <div>
+                    <p class="text-[#1b0e19] font-medium">System Admin</p>
+                    <p class="text-[#964f8c] text-sm">Administrator</p>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="/admin/dashboard" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <span>Dashboard</span>
+            </a>
+            <a href="/admin/events" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <span>Manage Events</span>
+            </a>
+            <a href="/admin/students" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <span>Manage Students</span>
+            </a>
+            <a href="/auth/logout" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+        {{#if success}}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                {{success}}
+            </div>
+        {{/if}}
+        {{#if error}}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{error}}
+            </div>
+        {{/if}}
+
+        <h1 class="text-2xl font-bold text-[#1b0e19] mb-8">Create New Event</h1>
+
+        <!-- Create Event Form -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <form action="/admin/events/create" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Event Title</label>
+                        <input type="text" name="title" required value="{{formData.title}}"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                    </div>
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Date</label>
+                        <input type="date" name="date" required value="{{formData.date}}"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                    </div>
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Time</label>
+                        <input type="time" name="time" required value="{{formData.time}}"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                    </div>
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Location</label>
+                        <input type="text" name="location" required value="{{formData.location}}"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[#1b0e19] font-medium mb-2">Description</label>
+                    <textarea name="description" required rows="4"
+                        class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">{{formData.description}}</textarea>
+                </div>
+
+                <div>
+                    <label class="block text-[#1b0e19] font-medium mb-2">Event Image</label>
+                    <input type="file" name="image" required accept="image/*"
+                        class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                </div>
+
+                <div>
+                    <label class="block text-[#1b0e19] font-medium mb-2">Topics</label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Academics" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Academics</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Research" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Research</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Athletics" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Athletics</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Art & Culture" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Art & Culture</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Public Service" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Public Service</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Health" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Health</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Sustainability" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Sustainability</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Diversity Equity & Inclusion" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Diversity Equity & Inclusion</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Global" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Global</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Alumni" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Alumni</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="Giving" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">Giving</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="topics" value="News" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                            <span class="text-[#1b0e19]">News</span>
+                        </label>
+
+
+                        <!-- Add remaining topic checkboxes -->
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="bg-[#92137f] text-white px-6 py-2 rounded-xl hover:bg-[#7b0f6b] transition-colors">
+                    Create Event
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

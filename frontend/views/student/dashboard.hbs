@@ -1,0 +1,109 @@
+<div class="flex flex-1">
+    <!-- Sidebar -->
+    <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+        <div class="mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                    {{user.initials}}
+                </div>
+                <div>
+                    <p class="text-[#1b0e19] font-medium">{{user.fullName}}</p>
+                    <p class="text-[#964f8c] text-sm">Student</p>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="/student/dashboard" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77Z"></path>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="/student/events" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Z"></path>
+                </svg>
+                <span>Events</span>
+            </a>
+            <a href="/student/volunteering" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92Z"></path>
+                </svg>
+                <span>My Volunteering</span>
+            </a>
+            <a href="/student/bookmarks" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.76,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z"></path>
+                </svg>
+                <span>Bookmarks</span>
+            </a>
+            <a href="/student/notifications" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06Z"></path>
+                </svg>
+                <span>Notifications</span>
+            </a>
+            <a href="/student/settings" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"></path>
+                </svg>
+                <span>Settings</span>
+            </a>
+            <a href="/auth/logout" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                    <path d="M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L196.69,120H104a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,221.66,122.34Z"></path>
+                </svg>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+        <div class="flex flex-wrap justify-between gap-3 mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-[#1b0e19] mb-2">Welcome, {{user.fullName}}!</h1>
+                <p class="text-[#964f8c]">Here's what's happening with your events</p>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h3 class="text-lg font-bold text-[#1b0e19] mb-2">Upcoming Events</h3>
+                <p class="text-3xl font-bold text-[#92137f]">3</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h3 class="text-lg font-bold text-[#1b0e19] mb-2">Volunteering</h3>
+                <p class="text-3xl font-bold text-[#92137f]">2</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h3 class="text-lg font-bold text-[#1b0e19] mb-2">Bookmarked</h3>
+                <p class="text-3xl font-bold text-[#92137f]">5</p>
+            </div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-bold text-[#1b0e19] mb-4">Your Upcoming Events</h2>
+            <div class="space-y-4">
+                {{#if upcomingEvents}}
+                    {{#each upcomingEvents}}
+                        <div class="flex items-center justify-between p-4 border border-[#e6d0e3] rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-[#f3e8f1] rounded-lg"></div>
+                                <div>
+                                    <h3 class="font-medium text-[#1b0e19]">{{this.title}}</h3>
+                                    <p class="text-sm text-[#964f8c]">{{formatDate this.date}}</p>
+                                </div>
+                            </div>
+                            <a href="/student/events/{{this._id}}" class="text-[#92137f] hover:underline">View Details</a>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <p class="text-[#964f8c] text-center py-4">No upcoming events</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
