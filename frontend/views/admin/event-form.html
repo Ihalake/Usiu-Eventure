@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Event</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/script.js"></script>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Create New Event</h2>
+    <form action="/admin/create-event" method="POST">
+      <label>Event Title</label>
+      <input type="text" name="title" required>
+
+      <label>Description</label>
+      <textarea name="description" required></textarea>
+
+      <label>Date</label>
+      <input type="date" name="date" required>
+
+      <label>Location</label>
+      <input type="text" name="location" required>
+
+      <label>Category</label>
+      <select name="category" required>
+        <option value="Sports">Sports</option>
+        <option value="Academics">Academics</option>
+        <option value="Environment">Environment</option>
+        <option value="Health">Health</option>
+        <option value="Community Service">Community Service</option>
+        <option value="Arts">Arts</option>
+      </select>
+
+      <h3>Volunteer Tasks</h3>
+      <div id="tasks-container">
+        <!-- Tasks will be added here -->
+      </div>
+
+      <button type="button" onclick="addTask()">+ Add Task</button>
+      <br><br>
+      <button type="submit">Create Event</button>
+    </form>
+  </div>
+</body>
+</html>
+

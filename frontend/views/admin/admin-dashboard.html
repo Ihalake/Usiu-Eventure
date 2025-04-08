@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <nav>
+    <h2>USIU Volunteer Hub</h2>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">My Volunteering</a></li>
+      <li><a href="/admin/dashboard">Admin Dashboard</a></li>
+      <li>Welcome, Admin User</li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+
+  <section class="dashboard">
+    <h1>Admin Dashboard</h1>
+    <div class="cards">
+      <div class="card">Total Events<br><span><%= totalEvents %></span></div>
+      <div class="card">Upcoming Events<br><span><%= upcomingEvents.length %></span></div>
+      <div class="card">Registered Students<br><span><%= studentCount %></span></div>
+    </div>
+
+    <h2>Upcoming Events</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Volunteers</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% upcomingEvents.forEach(event => { %>
+          <tr>
+            <td><%= event.title %><br><small><%= event.type %></small></td>
+            <td><%= event.date.toDateString() %></td>
+            <td><%= event.location %></td>
+            <td><%= event.volunteers.length %></td>
+            <td>
+              <a href="#">Manage</a> | <a href="#">View</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <button class="create-btn">+ Create Event</button>
+  </section>
+</body>
+</html>
