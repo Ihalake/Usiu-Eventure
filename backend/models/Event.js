@@ -1,3 +1,4 @@
+// backend/models/Event.js
 const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
@@ -21,8 +22,8 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,  // Store image path/URL
+    imageUrl: {
+        type: String,
         required: true
     },
     topics: [{
@@ -42,6 +43,12 @@ const eventSchema = new mongoose.Schema({
             'News'
         ]
     }],
+    duration: {
+        type: Number,
+        default: 24, // Default duration in hours
+        min: 1,
+        max: 168 // Max one week
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

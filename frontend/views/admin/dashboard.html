@@ -1,3 +1,4 @@
+<!-- frontend/views/admin/dashboard.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,13 +31,13 @@
                 </div>
             </div>
             <nav>
-                <a href="#" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <a href="/admin/dashboard" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <a href="/admin/events" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
                     <span>Manage Events</span>
                 </a>
-                <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                <a href="/admin/students" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
                     <span>Manage Students</span>
                 </a>
                 <a href="#" id="logoutBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
@@ -51,176 +52,49 @@
             <div id="notification" class="hidden">
                 <div class="mb-4 rounded-xl p-4"></div>
             </div>
-
-            <h1 class="text-2xl font-bold text-[#1b0e19] mb-8">Student Management</h1>
-
-            <!-- Add Student Form -->
-            <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
-                <h2 class="text-lg font-bold text-[#1b0e19] mb-4">Add New Student</h2>
-                <form id="addStudentForm" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[#1b0e19] font-medium mb-2">Full Name</label>
-                            <input type="text" name="name" required
-                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
-                        </div>
-                        <div>
-                            <label class="block text-[#1b0e19] font-medium mb-2">School ID</label>
-                            <input type="text" name="schoolId" required
-                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
-                        </div>
-                        <div>
-                            <label class="block text-[#1b0e19] font-medium mb-2">Password</label>
-                            <input type="password" name="password" required
-                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
-                        </div>
-                    </div>
-                    <button type="submit"
-                        class="bg-[#92137f] text-white px-6 py-2 rounded-xl hover:bg-[#7b0f6b] transition-colors">
-                        Add Student
-                    </button>
-                </form>
+        
+            <h1 class="text-2xl font-bold text-[#1b0e19] mb-8">Admin Dashboard</h1>
+        
+            <!-- Stats Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-[#1b0e19] mb-2">Total Events</h3>
+                    <p id="totalEventsCount" class="text-3xl font-bold text-[#92137f]">0</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-[#1b0e19] mb-2">Total Volunteers</h3>
+                    <p id="totalVolunteersCount" class="text-3xl font-bold text-[#92137f]">0</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-[#1b0e19] mb-2">Registered Students</h3>
+                    <p id="registeredStudentsCount" class="text-3xl font-bold text-[#92137f]">0</p>
+                </div>
             </div>
-
-            <!-- Students List -->
-            <div class="bg-white rounded-xl shadow-sm p-6">
-                <h2 class="text-lg font-bold text-[#1b0e19] mb-4">Registered Students</h2>
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b border-[#e6d0e3]">
-                                <th class="text-left p-3 text-[#1b0e19]">Full Name</th>
-                                <th class="text-left p-3 text-[#1b0e19]">School ID</th>
-                                <th class="text-left p-3 text-[#1b0e19]">Created At</th>
-                                <th class="text-left p-3 text-[#1b0e19]">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsTableBody"></tbody>
-                    </table>
+        
+            <!-- Volunteer Management Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h2 class="text-lg font-bold text-[#1b0e19] mb-4">Volunteer Applications</h2>
+                <div class="flex gap-3 mb-4">
+                    <button id="allVolunteersBtn" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#92137f] text-white pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">All</p>
+                    </button>
+                    <button id="pendingVolunteersBtn" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">Pending</p>
+                    </button>
+                    <button id="approvedVolunteersBtn" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">Approved</p>
+                    </button>
+                    <button id="rejectedVolunteersBtn" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">Rejected</p>
+                    </button>
+                </div>
+                <div id="volunteersContainer" class="space-y-4">
+                    <p class="text-center py-4 text-[#964f8c]">Loading volunteer applications...</p>
                 </div>
             </div>
         </div>
-    </div>
+        
 
-    <script>
-        // Check authentication
-        const token = localStorage.getItem('token');
-        if (!token) {
-            window.location.href = '/';
-        }
-
-        // Show notification function
-        function showNotification(message, type = 'error') {
-            const notification = document.getElementById('notification');
-            const notificationContent = notification.querySelector('div');
-            
-            notificationContent.className = 'mb-4 rounded-xl p-4 ' + 
-                (type === 'success' 
-                    ? 'bg-[#f3f9f3] border border-[#92137f] text-[#1b0e19]'
-                    : 'bg-[#fdf2f1] border border-[#e6d0e3] text-[#1b0e19]');
-            
-            notificationContent.textContent = message;
-            notification.classList.remove('hidden');
-            
-            setTimeout(() => {
-                notification.classList.add('hidden');
-            }, 3000);
-        }
-
-        // Fetch and display students
-        async function fetchStudents() {
-            try {
-                const response = await fetch('/api/auth/students', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const data = await response.json();
-                
-                const tableBody = document.getElementById('studentsTableBody');
-                tableBody.innerHTML = data.students.map(student => `
-                    <tr class="border-b border-[#e6d0e3]">
-                        <td class="p-3">${student.name}</td>
-                        <td class="p-3">${student.schoolId}</td>
-                        <td class="p-3">${new Date(student.createdAt).toLocaleDateString()}</td>
-                        <td class="p-3">
-                            <button onclick="deleteStudent('${student._id}')"
-                                class="text-red-500 hover:text-red-700">Delete</button>
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                showNotification('Error fetching students');
-            }
-        }
-
-        // Add student form handler
-        document.getElementById('addStudentForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            
-            try {
-                const response = await fetch('/api/auth/create-student', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        name: formData.get('name'),
-                        schoolId: formData.get('schoolId'),
-                        password: formData.get('password')
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (response.ok) {
-                    showNotification('Student added successfully', 'success');
-                    e.target.reset();
-                    fetchStudents();
-                } else {
-                    showNotification(data.message);
-                }
-            } catch (error) {
-                showNotification('Error adding student');
-            }
-        });
-
-        // Delete student function
-        async function deleteStudent(id) {
-            if (!confirm('Are you sure you want to delete this student?')) return;
-            
-            try {
-                const response = await fetch(`/api/auth/students/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (response.ok) {
-                    showNotification('Student deleted successfully', 'success');
-                    fetchStudents();
-                } else {
-                    const data = await response.json();
-                    showNotification(data.message);
-                }
-            } catch (error) {
-                showNotification('Error deleting student');
-            }
-        }
-
-        // Logout handler
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = '/';
-        });
-
-        // Initialize
-        fetchStudents();
-    </script>
+    <script src="/assets/js/admin-dashboard.js"></script>
 </body>
 </html>

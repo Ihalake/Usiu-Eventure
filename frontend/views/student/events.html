@@ -1,0 +1,186 @@
+<!-- frontend/views/student/events.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USIU Events - Browse Events</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+        }
+
+        .bookmark-badge {
+        position: absolute;
+        right: 8px;
+        transform: translateY(-50%);
+        top: 50%;
+    }
+    
+    a[href="/student/bookmarks"] {
+        position: relative;
+    }
+
+    @keyframes bookmark-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.bookmark-animation {
+    animation: bookmark-pulse 0.5s ease-in-out;
+}
+
+        .notification-badge {
+        position: absolute;
+        right: 8px;
+        transform: translateY(-50%);
+        top: 50%;
+    }
+    
+    a[href="/student/notifications"] {
+        position: relative;
+    }
+    </style>
+</head>
+<body class="bg-[#fbf8fb]">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div id="userInitials" class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                        ST
+                    </div>
+                    <div>
+                        <p id="userName" class="text-[#1b0e19] font-medium">Student</p>
+                        <p class="text-[#964f8c] text-sm">Student</p>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <a href="/student/dashboard" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77Z"></path>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/student/events" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Z"></path>
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="/student/volunteering" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92Z"></path>
+                    </svg>
+                    <span>My Volunteering</span>
+                </a>
+                <a href="/student/bookmarks" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.76,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z"></path>
+                    </svg>
+                    <span>Bookmarks</span>
+                </a>
+                <a href="/student/notifications" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06Z"></path>
+                    </svg>
+                    <span>Notifications</span>
+                </a>
+                <a href="/student/settings" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+                <a href="#" id="logoutBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="shrink-0" viewBox="0 0 256 256">
+                        <path d="M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L196.69,120H104a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,221.66,122.34Z"></path>
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Notification area -->
+            <div id="notification" class="hidden">
+                <div class="mb-4 rounded-xl p-4"></div>
+            </div>
+
+            <div class="flex flex-wrap justify-between gap-3 mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-[#1b0e19] mb-2">Events</h1>
+                    <p class="text-[#964f8c]">Discover upcoming events</p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex gap-3 mb-6">
+                <div class="flex gap-3 p-3 flex-wrap">
+                    <button id="todayFilter" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">Today</p>
+                    </button>
+                    <button id="weekFilter" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">This week</p>
+                    </button>
+                    <button id="monthFilter" class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 transition-colors">
+                        <p class="text-sm font-medium leading-normal">This month</p>
+                    </button>
+                    <button id="clearFilter" class="hidden flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f3e8f1] text-[#1b0e19] pl-4 pr-4 hover:bg-[#e6d0e3] transition-colors">
+                        <p class="text-sm font-medium leading-normal">Clear</p>
+                    </button>
+                </div>
+
+                <select id="topicFilter" class="rounded-xl border border-[#e6d0e3] bg-[#fbf8fb] px-4 py-2 text-[#1b0e19]">
+                    <option value="">All Topics</option>
+                    <option value="Academics">Academics</option>
+                    <option value="Research">Research</option>
+                    <option value="Athletics">Athletics</option>
+                    <option value="Art & Culture">Art & Culture</option>
+                    <option value="Public Service">Public Service</option>
+                    <option value="Health">Health</option>
+                    <option value="Sustainability">Sustainability</option>
+                    <option value="Diversity Equity & Inclusion">Diversity Equity & Inclusion</option>
+                    <option value="Global">Global</option>
+                    <option value="Alumni">Alumni</option>
+                    <option value="Giving">Giving</option>
+                    <option value="News">News</option>
+                </select>
+            </div>
+
+            <!-- Search -->
+            <div class="mb-6">
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-[#964f8c]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                        </svg>
+                    </span>
+                    <input type="text" 
+                           id="searchEvents" 
+                           placeholder="Search events" 
+                           class="w-full rounded-xl border border-[#e6d0e3] bg-[#fbf8fb] pl-10 pr-4 py-2 text-[#1b0e19]">
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div id="eventsList" class="space-y-4">
+                <div class="text-center py-8">
+                    <div class="animate-spin inline-block w-8 h-8 border-4 border-[#e6d0e3] border-t-[#92137f] rounded-full"></div>
+                    <p class="text-[#964f8c] mt-4">Loading events...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/student-common.js"></script>
+    <script src="/assets/js/student-events.js"></script>
+</body>
+</html>

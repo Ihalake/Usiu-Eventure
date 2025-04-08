@@ -1,0 +1,82 @@
+<!-- frontend/views/admin/event-detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USIU Events - Event Details</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#fbf8fb]">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div id="adminInitials" class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                        SA
+                    </div>
+                    <div>
+                        <p class="text-[#1b0e19] font-medium">System Admin</p>
+                        <p class="text-[#964f8c] text-sm">Administrator</p>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <a href="/admin/dashboard" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/events" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Events</span>
+                </a>
+                <a href="/admin/students" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Students</span>
+                </a>
+                <a href="#" id="logoutBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Notification area -->
+            <div id="notification" class="hidden">
+                <div class="mb-4 rounded-xl p-4"></div>
+            </div>
+
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-[#1b0e19]">Event Details</h1>
+                <div class="flex gap-4">
+                    <a href="/admin/events" class="bg-gray-200 px-6 py-2 rounded-xl hover:bg-gray-300 transition-colors text-[#1b0e19]">
+                        Back to Events
+                    </a>
+                    <a id="editEventBtn" href="#" class="bg-[#92137f] text-white px-6 py-2 rounded-xl hover:bg-[#7b0f6b] transition-colors">
+                        Edit Event
+                    </a>
+                </div>
+            </div>
+
+            <!-- Event Details -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div id="eventDetails" class="space-y-6">
+                    <!-- Event details will be loaded here -->
+                    <div class="flex items-center justify-center p-12">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#92137f]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/event-detail.js"></script>
+</body>
+</html>

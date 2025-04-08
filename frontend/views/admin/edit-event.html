@@ -1,0 +1,140 @@
+<!-- frontend/views/admin/edit-event.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USIU Events - Edit Event</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#fbf8fb]">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div id="adminInitials" class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                        SA
+                    </div>
+                    <div>
+                        <p class="text-[#1b0e19] font-medium">System Admin</p>
+                        <p class="text-[#964f8c] text-sm">Administrator</p>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <a href="/admin/dashboard" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/events" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Events</span>
+                </a>
+                <a href="/admin/students" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Students</span>
+                </a>
+                <a href="#" id="logoutBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Notification area -->
+            <div id="notification" class="hidden">
+                <div class="mb-4 rounded-xl p-4"></div>
+            </div>
+
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-[#1b0e19]">Edit Event</h1>
+                <a href="/admin/events" class="bg-gray-200 px-6 py-2 rounded-xl hover:bg-gray-300 transition-colors text-[#1b0e19]">
+                    Cancel
+                </a>
+            </div>
+
+            <!-- Edit Event Form -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <form id="editEventForm" class="space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Event Title</label>
+                            <input type="text" name="title" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Date</label>
+                            <input type="date" name="date" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Time</label>
+                            <input type="time" name="time" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Location</label>
+                            <input type="text" name="location" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Description</label>
+                        <textarea name="description" required rows="4"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Event Image</label>
+                        <div id="currentImageContainer" class="mb-2">
+                            <img id="currentImage" src="" alt="Current event image" class="w-48 h-32 object-cover rounded-lg">
+                        </div>
+                        <input type="file" name="image" accept="image/*"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        <p class="text-sm text-[#964f8c] mt-1">Upload a new image or keep the existing one. Max 5MB.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Topics</label>
+                        <div class="grid grid-cols-3 gap-4" id="topicsContainer">
+                            <!-- Topics checkboxes will be loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Event Duration (hours)</label>
+                        <input type="number" name="duration" min="1" max="168" required
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        <p class="text-sm text-[#964f8c] mt-1">Specify how long the event will last (1-168 hours)</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Status</label>
+                        <select name="status" required class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="bg-[#92137f] text-white px-6 py-2 rounded-xl hover:bg-[#7b0f6b] transition-colors">
+                        Update Event
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/edit-event.js"></script>
+</body>
+</html>

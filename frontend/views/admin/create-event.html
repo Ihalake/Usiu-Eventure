@@ -1,0 +1,177 @@
+<!-- frontend/views/admin/create-event.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USIU Events - Create Event</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#fbf8fb]">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#fbf8fb] border-r border-[#e6d0e3] p-4">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div id="adminInitials" class="w-10 h-10 rounded-full bg-[#92137f] text-white flex items-center justify-center font-bold">
+                        SA
+                    </div>
+                    <div>
+                        <p class="text-[#1b0e19] font-medium">System Admin</p>
+                        <p class="text-[#964f8c] text-sm">Administrator</p>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <a href="/admin/dashboard" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Dashboard</span>
+                </a>
+                <a href="/admin/events" class="flex items-center gap-2 p-2 rounded-lg bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Events</span>
+                </a>
+                <a href="/admin/students" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19] mb-2">
+                    <span>Manage Students</span>
+                </a>
+                <a href="#" id="logoutBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f3e8f1] text-[#1b0e19]">
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Notification area -->
+            <div id="notification" class="hidden">
+                <div class="mb-4 rounded-xl p-4"></div>
+            </div>
+
+            <h1 class="text-2xl font-bold text-[#1b0e19] mb-8">Create New Event</h1>
+
+            <!-- Create Event Form -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <form id="createEventForm" class="space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Event Title</label>
+                            <input type="text" name="title" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Date</label>
+                            <input type="date" name="date" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Time</label>
+                            <input type="time" name="time" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                        <div>
+                            <label class="block text-[#1b0e19] font-medium mb-2">Location</label>
+                            <input type="text" name="location" required
+                                class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Description</label>
+                        <textarea name="description" required rows="4"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Event Image</label>
+                        <input type="file" name="image" required accept="image/*"
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        <p class="text-sm text-[#964f8c] mt-1">Upload an image (max 5MB). Supported formats: JPEG, PNG, GIF.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Topics</label>
+                        <div class="grid grid-cols-3 gap-4">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Academics" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Academics</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Research" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Research</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Athletics" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Athletics</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Art & Culture" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Art & Culture</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Public Service" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Public Service</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Health" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Health</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Sustainability" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Sustainability</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Diversity Equity & Inclusion" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Diversity Equity & Inclusion</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Global" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Global</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Alumni" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Alumni</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="Giving" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">Giving</span>
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="topics" value="News" class="rounded border-[#e6d0e3] text-[#92137f] focus:ring-[#92137f]">
+                                <span class="text-[#1b0e19]">News</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Event Duration (hours)</label>
+                        <input type="number" name="duration" min="1" max="168" value="24" required
+                            class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                        <p class="text-sm text-[#964f8c] mt-1">Specify how long the event will last (1-168 hours)</p>
+                    </div>
+                    <div>
+                        <label class="block text-[#1b0e19] font-medium mb-2">Status</label>
+                        <select name="status" required class="w-full rounded-xl border border-[#e6d0e3] p-3 focus:outline-none focus:border-[#92137f]">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="bg-[#92137f] text-white px-6 py-2 rounded-xl hover:bg-[#7b0f6b] transition-colors">
+                        Create Event
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/create-event.js"></script>
+</body>
+</html>

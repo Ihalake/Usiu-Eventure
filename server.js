@@ -1,60 +1,142 @@
-const express = require('express');
-const exphbs = require('express-handlebars');
-const mongoose = require('mongoose');
-const path = require('path');
-const cookieParser = require('cookie-parser');
+// server.js
 require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const path = require('path');
+const authRoutes = require('./backend/routes/auth');
+const eventsRoutes = require('./backend/routes/events'); 
+const User = require('./backend/models/User');
+const studentRoutes = require('./backend/routes/student');
+const adminRoutes = require('./backend/routes/admin');
+const notificationRoutes = require('./backend/routes/notifications');
+const { startEventStatusUpdater } = require('./backend/jobs/eventStatusUpdater');
 
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(express.static('frontend'));
 
-// Update the static file serving to use path.join
-app.use(express.static(path.join(__dirname, 'frontend/public')));
+// Database connection
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log('Connected to MongoDB');
+      initializeAdmin();
+      startEventStatusUpdater();
+    })
+    .catch(err => console.error('MongoDB connection error:', err));
 
-// Handlebars setup
-const hbs = exphbs.create({
-    extname: '.hbs',
-    defaultLayout: 'main',
-    layoutsDir: path.join(__dirname, 'frontend/views/layouts'),
-    partialsDir: path.join(__dirname, 'frontend/views/partials'),
-    helpers: {
-        formatDate: function(date) {
-            return date ? new Date(date).toLocaleDateString() : '';
-        },
-        eq: function(a, b) {
-            return a === b;
-        }
-    },
-    runtimeOptions: {
-        allowProtoPropertiesByDefault: true,
-        allowProtoMethodsByDefault: true
-    }
-});
 
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-app.set('views', './frontend/views');
+// Admin Initialization if they dont exist
+const initializeAdmin = async () => {
+  try {
+      const adminExists = await User.findOne({ schoolId: process.env.ADMIN_ID });
+      if (!adminExists) {
+          await User.create({
+              name: 'System Admin',
+              schoolId: process.env.ADMIN_ID,
+              password: process.env.ADMIN_PASSWORD,
+              role: 'admin',
+              email: 'admin@example.com', // Add a valid email
+              firstName: 'System',       // Add a first name
+              lastName: 'Admin'          // Add a last name
+          });
+          console.log('Admin user initialized');
+      }
+  } catch (error) {
+      console.error('Admin initialization error:', error);
+  }
+};
 
 // Routes
-app.use('/auth', require('./backend/routes/auth'));
-app.use('/admin', require('./backend/routes/admin'));
-app.use('/student', require('./backend/routes/student'));
-app.use('/admin', require('./backend/routes/events'));
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/student', studentRoutes);
+app.use('/api/events', eventsRoutes); 
+app.use('/api/notifications', notificationRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'frontend/uploads')));
 
-
-// Default route
+// Serve frontend pages
 app.get('/', (req, res) => {
-    res.redirect('/auth/login');
+  res.sendFile(path.join(__dirname, 'frontend/views/welcome.html'));
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log('MongoDB Connection Error: ', err));
+// Add route for login page 
+app.get('/auth/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/auth/login.html'));
+});
 
-const PORT = process.env.PORT || 3000;
+// Registration page route
+app.get('/auth/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/auth/register.html'));
+});
+
+// Add route for event details page
+app.get('/event-details', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/event-details.html'));
+});
+
+// Routes for student pages
+app.get('/student/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/dashboard.html'));
+});
+
+app.get('/student/events', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/events.html'));
+});
+
+app.get('/student/event/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/event-detail.html'));
+});
+
+app.get('/student/volunteering', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/volunteering.html'));
+});
+
+// Route for bookmarks page
+app.get('/student/bookmarks', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/bookmarks.html'));
+});
+
+// Notification page
+app.get('/student/notifications', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/notifications.html'));
+});
+
+app.get('/student/settings', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/student/dashboard.html')); // We can create this later
+});
+
+// Admin dashboard route
+app.get('/admin/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/admin/dashboard.html'));
+});
+
+// Admin manage student route
+app.get('/admin/students', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/admin/students.html'));
+});
+
+// Admin event routes 
+app.get('/admin/events', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/admin/events.html'));
+});
+
+app.get('/admin/create-event', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/admin/create-event.html'));
+});
+
+// Event detail route
+app.get('/admin/event-detail', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/admin/event-detail.html'));
+});
+
+// Edit event route
+app.get('/admin/edit-event', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/views/admin/edit-event.html'));
+});
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

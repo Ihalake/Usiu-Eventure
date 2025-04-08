@@ -1,25 +1,29 @@
 {
-  "name": "events-usiu",
+  "name": "usiu-eventure",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Eventure is an app for USIU community to discover events in school and sign-up for volunteering opportunities",
+  "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ihalake/Usiu-Eventure.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.7",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "express-handlebars": "^8.0.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.10.0",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.10.0"
+    "mongoose": "^8.10.1",
+    "multer": "^1.4.5-lts.2",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
