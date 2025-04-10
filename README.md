@@ -50,18 +50,22 @@ This platform serves as a centralized hub where:
 3. Set up environment variables:
    Create a `.env` file in the root directory and add:
    ```
+   PORT=5000
    MONGODB_URI=your_mongo_connection_string
    JWT_SECRET=your_jwt_secret
+   ADMIN_ID=admin123
+   ADMIN_PASSWORD=admin456
+   
    ```
 
 4. Run the application:
    ```bash
-   npm start
+   npm run dev
    ```
 
 5. Open in your browser:
    ```
-   http://localhost:3000
+   http://localhost:5000
    ```
 
 ## 👥 Target Users
